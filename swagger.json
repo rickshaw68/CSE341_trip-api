@@ -6,15 +6,11 @@
     "description": "API for managing trips and bookings for the Trip Planner project."
   },
   "servers": [
-    {
-      "url": "http://localhost:8080",
-      "description": "Local server"
-    },
-    {
-      "url": "https://your-render-url.onrender.com",
-      "description": "Render deployment"
-    }
-  ],
+  {
+    "url": "/",
+    "description": "Current server"
+  }
+],
   "paths": {
     "/trips": {
       "get": {
