@@ -1,0 +1,225 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Trip Planner API",
+    "version": "1.0.0",
+    "description": "API for managing trips and bookings for the Trip Planner project."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local server"
+    },
+    {
+      "url": "https://your-render-url.onrender.com",
+      "description": "Render deployment"
+    }
+  ],
+  "paths": {
+    "/trips": {
+      "get": {
+        "summary": "Get all trips",
+        "responses": {
+          "200": {
+            "description": "List of trips"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new trip",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Trip" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Trip created" },
+          "400": { "description": "Validation error" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/trips/{id}": {
+      "get": {
+        "summary": "Get a trip by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Trip found" },
+          "400": { "description": "Invalid ID" },
+          "404": { "description": "Trip not found" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "put": {
+        "summary": "Update a trip by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Trip" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Trip updated" },
+          "400": { "description": "Validation/ID error" },
+          "404": { "description": "Trip not found" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "delete": {
+        "summary": "Delete a trip by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Trip deleted" },
+          "400": { "description": "Invalid ID" },
+          "404": { "description": "Trip not found" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/bookings": {
+      "get": {
+        "summary": "Get all bookings",
+        "responses": {
+          "200": { "description": "List of bookings" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "post": {
+        "summary": "Create a new booking",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Booking" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Booking created" },
+          "400": { "description": "Validation error" },
+          "404": { "description": "Trip not found" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/bookings/{id}": {
+      "get": {
+        "summary": "Get a booking by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Booking found" },
+          "400": { "description": "Invalid ID" },
+          "404": { "description": "Booking not found" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "put": {
+        "summary": "Update a booking by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Booking" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Booking updated" },
+          "400": { "description": "Validation/ID error" },
+          "404": { "description": "Booking not found" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "delete": {
+        "summary": "Delete a booking by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Booking deleted" },
+          "400": { "description": "Invalid ID" },
+          "404": { "description": "Booking not found" },
+          "500": { "description": "Server error" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Trip": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "destination": { "type": "string" },
+          "category": { "type": "string" },
+          "durationDays": { "type": "number" },
+          "price": { "type": "number" },
+          "difficulty": { "type": "string", "enum": ["easy", "moderate", "hard"] },
+          "description": { "type": "string" }
+        },
+        "required": ["title", "destination", "category", "durationDays", "price", "difficulty", "description"]
+      },
+      "Booking": {
+        "type": "object",
+        "properties": {
+          "tripId": { "type": "string" },
+          "customerName": { "type": "string" },
+          "customerEmail": { "type": "string" },
+          "numTravelers": { "type": "integer" },
+          "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] }
+        },
+        "required": ["tripId", "customerName", "customerEmail", "numTravelers"]
+      }
+    }
+  }
+}
