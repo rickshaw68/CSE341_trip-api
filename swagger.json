@@ -3,14 +3,14 @@
   "info": {
     "title": "Trip Planner API",
     "version": "1.0.0",
-    "description": "API for managing trips and bookings for the Trip Planner project."
+    "description": "API for managing trips and bookings for the Trip Planner project.<br><br>\n<a href=\"/auth/logout\" style=\"display:inline-block; padding:8px 12px; background:#b22222; color:white; font-weight:bold; border-radius:6px; text-decoration:none;\">Logout</a>"
   },
   "servers": [
-  {
-    "url": "/",
-    "description": "Current server"
-  }
-],
+    {
+      "url": "/",
+      "description": "Current server"
+    }
+  ],
   "paths": {
     "/trips": {
       "get": {
@@ -25,7 +25,8 @@
         }
       },
       "post": {
-        "summary": "Create a new trip",
+        "summary": "Create a new trip (requires login)",
+        "description": "Requires authentication via Google OAuth.<br>If you need to logout, click here:<br><a href=\"/auth/logout\">Logout</a>",
         "requestBody": {
           "required": true,
           "content": {
@@ -60,7 +61,8 @@
         }
       },
       "put": {
-        "summary": "Update a trip by ID",
+        "summary": "Update a trip by ID (requires login)",
+        "description": "Requires authentication via Google OAuth.<br><a href=\"/auth/logout\">Logout</a>",
         "parameters": [
           {
             "name": "id",
@@ -85,7 +87,8 @@
         }
       },
       "delete": {
-        "summary": "Delete a trip by ID",
+        "summary": "Delete a trip by ID (requires login)",
+        "description": "Requires authentication via Google OAuth.<br><a href=\"/auth/logout\">Logout</a>",
         "parameters": [
           {
             "name": "id",
@@ -111,7 +114,8 @@
         }
       },
       "post": {
-        "summary": "Create a new booking",
+        "summary": "Create a new booking (requires login)",
+        "description": "Requires authentication via Google OAuth.<br><a href=\"/auth/logout\">Logout</a>",
         "requestBody": {
           "required": true,
           "content": {
@@ -147,7 +151,8 @@
         }
       },
       "put": {
-        "summary": "Update a booking by ID",
+        "summary": "Update a booking by ID (requires login)",
+        "description": "Requires authentication via Google OAuth.<br><a href=\"/auth/logout\">Logout</a>",
         "parameters": [
           {
             "name": "id",
@@ -172,7 +177,8 @@
         }
       },
       "delete": {
-        "summary": "Delete a booking by ID",
+        "summary": "Delete a booking by ID (requires login)",
+        "description": "Requires authentication via Google OAuth.<br><a href=\"/auth/logout\">Logout</a>",
         "parameters": [
           {
             "name": "id",
@@ -200,10 +206,21 @@
           "category": { "type": "string" },
           "durationDays": { "type": "number" },
           "price": { "type": "number" },
-          "difficulty": { "type": "string", "enum": ["easy", "moderate", "hard"] },
+          "difficulty": {
+            "type": "string",
+            "enum": ["easy", "moderate", "hard"]
+          },
           "description": { "type": "string" }
         },
-        "required": ["title", "destination", "category", "durationDays", "price", "difficulty", "description"]
+        "required": [
+          "title",
+          "destination",
+          "category",
+          "durationDays",
+          "price",
+          "difficulty",
+          "description"
+        ]
       },
       "Booking": {
         "type": "object",
@@ -212,9 +229,17 @@
           "customerName": { "type": "string" },
           "customerEmail": { "type": "string" },
           "numTravelers": { "type": "integer" },
-          "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] }
+          "status": {
+            "type": "string",
+            "enum": ["pending", "confirmed", "cancelled"]
+          }
         },
-        "required": ["tripId", "customerName", "customerEmail", "numTravelers"]
+        "required": [
+          "tripId",
+          "customerName",
+          "customerEmail",
+          "numTravelers"
+        ]
       }
     }
   }
